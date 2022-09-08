@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="shortcut icon" href="gwiin/favicon.ico"> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>귀인중 - 급식식단표</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="js/index.js"></script>
+  </head>
+  <body>
+    <!-- <div class="container-fluid bg-dark">
+      <nav class="navbar navbar-dark navbar-expand-sm">
+        <a href="/index.html" class="navbar-brand"><img height="25px" width="45px" src="./gwiin/gwiin.png"></img>마켓</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuItems" aria-controls="menuItems" aria-expanded="false" aria-label="Toggle Navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuItems">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a href="/chat.html" class="nav-link">Chat</a>
+            </li>
+            <li class="nav-item">
+              <a href="/upload.html" class="nav-link">Upload</a>
+            </li>
+            <li class="nav-item">
+              <a href="/login.html" id="loginMenu" class="nav-link">Login/Register</a>
+            </li>
+            <li class="nav-item">
+              <a href="/mypage.html" class="nav-link" id="userName"></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div> -->
+    
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"><kbd>날짜</kbd></th>
+          <th scope="col"><kbd>급식</kbd></th>
+          <th scope="col"><kbd>영양정보</kbd></th>
+          <!-- <th scope="col">알레르기 표기</th> -->
+        </tr>
+      </thead>
+      <tbody class="table-container"></tbody>
+    </table>
+    <a id="loading"><kbd>&nbsp;Loading...&nbsp;</kbd></a>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyC771gyRo2jxMvvNfxBrcyfXkDTRY6pFpI",
+        authDomain: "gmpn-913e0.firebaseapp.com",
+        projectId: "gmpn-913e0",
+        storageBucket: "gmpn-913e0.appspot.com",
+        messagingSenderId: "127999274468",
+        appId: "1:127999274468:web:4db520a62532e6e53f2bf1",
+        measurementId: "G-X0LW5J9KYW"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+      let week = []
+
+      var currentDay = new Date();  
+      var theYear = currentDay.getFullYear();
+      var theMonth = currentDay.getMonth();
+      var theDate  = currentDay.getDate();
+      var theDayOfWeek = currentDay.getDay();
+      
+      var weekdate = [];
+      
+      for(var i=0; i<7; i++) {
+        var resultDay = new Date(theYear, theMonth, theDate + (i - theDayOfWeek));
+        var yyyy = resultDay.getFullYear();
+        var mm = Number(resultDay.getMonth()) + 1;
+        var dd = resultDay.getDate();
+      
+        mm = String(mm).length === 1 ? '0' + mm : mm;
+        dd = String(dd).length === 1 ? '0' + dd : dd;
+      
+        weekdate[i] = yyyy + mm + dd;
+        week[i] = mm+"/"+dd;
+      }
+
+      console.log(week);
+      console.log(weekdate);
+
+      var url;
+      let param = '';
+      weekdateset(weekdate, param);
+    </script>
+
+    
+  </body>
+</html>
+
+
